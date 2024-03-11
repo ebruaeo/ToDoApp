@@ -2,40 +2,33 @@ package com.example.todoapp.data.datasource
 
 import android.util.Log
 import com.example.todoapp.data.entity.ToDoDataClass
+import com.example.todoapp.room.ToDosDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class ToDoDataSource {
+class ToDoDataSource(var tdDao: ToDosDao) {
 
     suspend fun kaydet(task_time: String, task_name: String) {
-        Log.e("Yeni task ekle", "$task_time - $task_name")
+       val newTask = ToDoDataClass(0,task_time,task_name)
+        tdDao.kaydet(newTask)
     }
 
     suspend fun guncelle(task_id: Int, task_time: String, task_name: String) {
-        Log.e("Task Güncelle", "$task_id- $task_time - $task_name")
+        val updatedTask = ToDoDataClass(task_id,task_time,task_name)
+        tdDao.guncelle(updatedTask)
     }
 
     suspend fun sil(task_id: Int) {
-        Log.e("Task Sil", task_id.toString())
+        val deletedTask = ToDoDataClass(task_id,"","")
+        tdDao.sil(deletedTask)
     }
 
     suspend fun toDoListYukle(): List<ToDoDataClass> = withContext(Dispatchers.IO) {
-        val tdList = listOf(
-            ToDoDataClass(1, "09:00", "Wake Up!"),
-            ToDoDataClass(2, "10:00", "Reading Book!"),
-            ToDoDataClass(3, "12:15", "Lunch!"),
-            ToDoDataClass(4, "14:30", "Exercise!"),
-            ToDoDataClass(5, "15:00", "Code!"),
-            ToDoDataClass(6, "17:30", "Go Shopping")
-        )
-        return@withContext tdList
+        return@withContext tdDao.taskYukle()
     }
 
     suspend fun ara(aramaKelimesi: String): List<ToDoDataClass> =
         withContext(Dispatchers.IO) {
-            val tdList = listOf(
-                ToDoDataClass(1, "09:00", "Wake Up!"),
-            )
-            return@withContext tdList
+            return@withContext tdDao.ara(aramaKelimesi)
         }
 }

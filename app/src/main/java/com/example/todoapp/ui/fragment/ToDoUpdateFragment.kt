@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.todoapp.R
@@ -12,6 +13,7 @@ import com.example.todoapp.databinding.FragmentToDoUpdateBinding
 import com.example.todoapp.databinding.ToDosDesigningBinding
 import com.example.todoapp.ui.viewmodel.NewToDoViewModel
 import com.example.todoapp.ui.viewmodel.ToDoUpdateViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,6 +39,8 @@ class ToDoUpdateFragment : Fragment() {
             val task_time = binding.editTextUpdateTime.text.toString()
             val task_name = binding.editTextUpdateTask.text.toString()
             viewModel.guncelle(newTask.task_id,task_time, task_name)
+            Snackbar.make(it,"Updated",Snackbar.LENGTH_SHORT).show()
+
         }
 
 

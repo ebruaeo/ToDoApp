@@ -6,10 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.example.todoapp.R
 import com.example.todoapp.databinding.FragmentNewToDoBinding
 import com.example.todoapp.ui.viewmodel.NewToDoViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,6 +29,7 @@ class NewToDoFragment : Fragment() {
             val task_time = binding.editTextNewTime.text.toString()
             val task_name = binding.editTextNewTask.text.toString()
             viewModel.kaydet(task_time, task_name)
+            Snackbar.make(it,"Saved", Snackbar.LENGTH_SHORT).show()
         }
         return binding.root
     }
